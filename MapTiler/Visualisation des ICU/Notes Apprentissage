@@ -1,0 +1,54 @@
+Mon apprentissage avec Map Libre
+
+/* 1- Démmarage */
+
+- Créer un fichier html basique
+- Créer un autre fichier css et un js en les liant au html 
+    (<link rel="stylesheet" href="styles.css"> dans le header 
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.min.js"></script>
+    <script src="script.js"></script> dans le body)
+- Dans le js on ajoute la clé API et la variable map avec const map = new maptilersdk.Map({ options,}) un peu comme avec openlayers
+
+/* 2- Customisation basique */
+les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
+
+#Changer le centrage : pointer les coordonnées sur la zone voulue et définir le zoom par défaut avec les paramètres center et zoom.
+
+            /* 2-1- Ajouter un Marqueur */
+                  - Créer la variable
+                  - Utiliser la fonction .Marker en spécifiant les coordonnées avec .setLngLat([])
+                  - Finir avec .addTo(map)
+            
+            #### POINT IMPORTANT ####
+            -- Il faut ajouter d'abord un gestionnaire d'évènements avant d'ajouter des couches vectorielles --
+                  map.on('load', function() {
+                  
+                  });
+            #### FIN ####
+            
+            #######Structure de la syntaxe avec le gestionnaire d'évènement #######
+            
+            -----> map.on| //gestionnaire d'évènement
+                         |---> Image //source de l'image
+                         |---> addImage //ajouter l'image
+                         |---> addSource //source de la donnée
+                         |---> addLayer //ajouter la donnée
+            
+            #### FIN ####
+
+#Ajouter une tuile vectorielle
+            map.addSource('points', {//nom de la couche
+              type: 'vector',
+              url: "https://api.maptiler.com/tiles/8395fded-62fb-4703-866e-c8f7418d8188/tiles.json?key=fJIJM9u7ZdZQhJMMXzg7" // Tuile geopackage ou MBTILES
+            });
+NB : Dans le .addLayer, il faut faire attention à affecter au paramètre source-layer, la valeur de l'identifiant de la coche tuilée
+
+
+
+
+
+
+
+
+
+

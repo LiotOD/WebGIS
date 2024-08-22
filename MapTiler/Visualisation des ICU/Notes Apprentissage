@@ -26,8 +26,9 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                   });
             #### FIN ####
 
-/* 2-2- IMPORTANT : STRUCTURE DES SYNTAXES PRINCIPALES */            
-            #######Structure de la syntaxe avec le gestionnaire d'évènement #######
+/* 2-2- IMPORTANT : STRUCTURE DES SYNTAXES PRINCIPALES */     
+
+            1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
             
             -----> map.on| //gestionnaire d'évènement
                              |---> Image //source de l'image
@@ -43,7 +44,15 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             
             #### FIN ####
 
-            #######Structure de la syntaxe pour ajouter une source #######
+            2- #######Structure de la syntaxe pour ajouter une image #######
+            
+            ----->    const image = await map.loadImage('chemin vers l'image');
+                      map.addImage('nomdelobjetimage', image.data);
+            
+            #### FIN ####
+
+
+            3- #######Structure de la syntaxe pour ajouter une source de données #######
             
             ----->  addSource| //'nomdelavariabledonnee',{
                                  |---> type // le type de la data : geojson, vector, raster, etc.
@@ -52,7 +61,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                             }
             #### FIN ####
 
-            #######Structure de la syntaxe pour ajouter une couche associée à la source #######
+            4- #######Structure de la syntaxe pour ajouter une couche associée à la source #######
             
             ----->  addLayer | {
                                  |---> id // identifiant unique de la couche
@@ -71,11 +80,6 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             #### FIN ####
 
 
-
-/* 2-2- Ajouter une tuile vectorielle */
-
-
-/* 2-2- Ajouter une tuile vectorielle */
 
 
 

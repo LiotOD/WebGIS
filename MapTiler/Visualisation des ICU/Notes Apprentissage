@@ -29,37 +29,44 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             #######Structure de la syntaxe avec le gestionnaire d'évènement #######
             
             -----> map.on| //gestionnaire d'évènement
-                         |---> Image //source de l'image
-                         |---> addImage //ajouter l'image
-                         |---> addSource //source de la donnée
-                         |---> addLayer //ajouter la donnée
-                         |---> Image2 //source de l'image 2
-                         |---> addImage //ajouter l'image 2
-                         |---> addSource //source de la donnée 2
-                         |---> addLayer //ajouter la donnée 2
-                         |---> addSource //source de la donnée 3
-                         |---> addLayer //ajouter la donnée 3
+                             |---> Image //source de l'image
+                             |---> addImage //ajouter l'image
+                             |---> addSource //source de la donnée
+                             |---> addLayer //ajouter la donnée
+                             |---> Image2 //source de l'image 2
+                             |---> addImage //ajouter l'image 2
+                             |---> addSource //source de la donnée 2
+                             |---> addLayer //ajouter la donnée 2
+                             |---> addSource //source de la donnée 3
+                             |---> addLayer //ajouter la donnée 3
             
             #### FIN ####
 
             #######Structure de la syntaxe pour ajouter une source #######
             
             ----->  addSource| //'nomdelavariabledonnee',{
-                             |---> type // le type de la data : geojson, vector, raster, etc.
-                             |---> url // ajouter l'url si c'est une tuile vectorielle
-                             |---> data // source de la donnée si c'est du geojson
-                    }
+                                 |---> type // le type de la data : geojson, vector, raster, etc.
+                                 |---> url // ajouter l'url si c'est une tuile vectorielle
+                                 |---> data // source de la donnée si c'est du geojson
+                            }
             #### FIN ####
 
             #######Structure de la syntaxe pour ajouter une couche associée à la source #######
             
             ----->  addLayer | {
-                             |---> id // identifiant unique de la couche
-                             |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
-                             |---> type // mettre le type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
-                             |---> source layer // identifiant unique de la couche présente dans la tuile vectorielle. Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle'
-                             |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
-                        }
+                                 |---> id // identifiant unique de la couche
+                                 |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
+                                 |---> type // mettre le type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
+                                 |---> source layer // identifiant unique de la couche présente dans la tuile vectorielle. Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle'
+                                 |---> layout  {// ici il faut mettre les détails pour l'icone si on va sur un type de symbologie symbol
+                                                    |---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici avec un const et un map.addImage
+                                                    |---> icon-size : valeur, // taille voulue pour l'icone
+                                                    |---> etc          
+                                 |---> paint // ici il faut mettre les détails associés au type de symbologie par exemple la couleur, l'opacité, les bordures etc.
+                                                    |---> fill-color : valeur,// couleur
+                                                    |---> fill-opacity : valeur, // opacité
+                                                    |---> etc
+                             }
             #### FIN ####
 
 

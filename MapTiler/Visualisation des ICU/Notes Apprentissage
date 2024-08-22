@@ -25,7 +25,8 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                   
                   });
             #### FIN ####
-            
+
+/* 2-2- IMPORTANT : STRUCTURE DES SYNTAXES PRINCIPALES */            
             #######Structure de la syntaxe avec le gestionnaire d'évènement #######
             
             -----> map.on| //gestionnaire d'évènement

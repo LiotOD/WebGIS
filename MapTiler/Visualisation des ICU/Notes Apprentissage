@@ -99,8 +99,14 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
             #### FIN ####
 
+         6- #######Structure de la syntaxe pour ajouter un evènement lié au comportement du curseur de la souris sur une couche #######
+            
+                                             |---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur à proximité d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+                                                             |---> map.getCanvas().style.cursor = 'pointer'; // définir le style du curseur
 
-
+            
+                                             |---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+                                                             |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
 
 
 

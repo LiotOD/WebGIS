@@ -30,17 +30,22 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
             1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
             
-            -----> map.on| //gestionnaire d'évènement
-                             |---> Image //source de l'image
-                             |---> addImage //ajouter l'image
-                             |---> addSource //source de la donnée
-                             |---> addLayer //ajouter la donnée
-                             |---> Image2 //source de l'image 2
-                             |---> addImage //ajouter l'image 2
-                             |---> addSource //source de la donnée 2
-                             |---> addLayer //ajouter la donnée 2
-                             |---> addSource //source de la donnée 3
-                             |---> addLayer //ajouter la donnée 3
+            -----> map.on('load', function ()| //gestionnaire d'évènement
+                                             |---> Image //source de l'image
+                                             |---> addImage //ajouter l'image
+                                             |---> addSource //source de la donnée
+                                             |---> addLayer //ajouter la donnée
+                                             |---> Image2 //source de l'image 2
+                                             |---> addImage //ajouter l'image 2
+                                             |---> addSource //source de la donnée 2
+                                             |---> addLayer //ajouter la donnée 2
+                                             |---> addSource //source de la donnée 3
+                                             |---> addLayer //ajouter la donnée 3
+                                             |---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
+                                                             |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
+                                                             |---> Autre variable // récupérer l'info voulue
+                                                             |---> Popup //ajouter une popup 
+                                                             |---> addLayer //ajouter la donnée 3
             
             #### FIN ####
 
@@ -79,3 +84,11 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                              }
             #### FIN ####
 
+            5- #######Structure de la syntaxe pour ajouter un popup  #######
+            
+            ----->  addSource| //'nomdelavariabledonnee',{
+                                 |---> type // le type de la data : geojson, vector, raster, etc.
+                                 |---> url // ajouter l'url si c'est une tuile vectorielle
+                                 |---> data // source de la donnée si c'est du geojson
+                            }
+            #### FIN ####

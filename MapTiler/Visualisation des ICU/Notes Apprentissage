@@ -91,9 +91,16 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
             5- #######Structure de la syntaxe pour ajouter un evènement lié à une couche #######
             
-                                             |---> map.on('click', 'couche_concernée', function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
+                                             |---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
                                                              |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
                                                              |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+                                                             |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
                                                              |---> Popup //ajouter une popup 
 
             #### FIN ####
+
+
+
+
+
+

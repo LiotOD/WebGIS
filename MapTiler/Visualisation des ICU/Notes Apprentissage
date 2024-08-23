@@ -45,7 +45,12 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                                                              |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
                                                              |---> Autre variable // récupérer l'info voulue
                                                              |---> Popup //ajouter une popup 
-                                                             |---> addLayer //ajouter la donnée 3
+                                             |---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris est sur une entité le curseur change de style
+                                                             |---> getCanvas().style.cursor // mettre la valeur du style voulu
+                                             |---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris n'est sur une entité le curseur change de style
+                                                             |---> getCanvas().style.cursor // mettre la valeur du style voulu
+
+
             
             #### FIN ####
 
@@ -84,11 +89,11 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                              }
             #### FIN ####
 
-            5- #######Structure de la syntaxe pour ajouter un popup  #######
+            5- #######Structure de la syntaxe pour ajouter un evènement lié à une couche #######
             
-            ----->  addSource| //'nomdelavariabledonnee',{
-                                 |---> type // le type de la data : geojson, vector, raster, etc.
-                                 |---> url // ajouter l'url si c'est une tuile vectorielle
-                                 |---> data // source de la donnée si c'est du geojson
-                            }
+                                             |---> map.on('click', 'couche_concernée', function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
+                                                             |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+                                                             |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+                                                             |---> Popup //ajouter une popup 
+
             #### FIN ####

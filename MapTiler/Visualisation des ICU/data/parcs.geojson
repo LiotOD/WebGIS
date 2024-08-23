@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "parcs",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 418336021, "osm_type": "ways_poly", "name": "Parc Cardinal Bernardin Gantin", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.4072569, 6.353423 ], [ 2.4077397, 6.3533991 ], [ 2.4077345, 6.3564567 ], [ 2.4072865, 6.3564699 ], [ 2.4072569, 6.353423 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 1188157140, "osm_type": "ways_poly", "name": "Presidential Pavillion", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.385197, 6.3539333 ], [ 2.3852667, 6.3538371 ], [ 2.3855872, 6.3533944 ], [ 2.3861175, 6.3537914 ], [ 2.3864257, 6.3540176 ], [ 2.3860184, 6.3545937 ], [ 2.3852103, 6.354003 ], [ 2.385197, 6.3539333 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 824939374, "osm_type": "ways_poly", "name": "Parc", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.3953177, 6.3514539 ], [ 2.3955356, 6.3513471 ], [ 2.3960177, 6.3523182 ], [ 2.3957999, 6.352425 ], [ 2.3953177, 6.3514539 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 241123185, "osm_type": "ways_poly", "name": "Place des Martyrs", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.4038513, 6.353516 ], [ 2.4051341, 6.3534573 ], [ 2.4052039, 6.3534788 ], [ 2.4052629, 6.3535266 ], [ 2.4052897, 6.3535719 ], [ 2.4053033, 6.3536312 ], [ 2.4053028, 6.353682 ], [ 2.4052518, 6.353746 ], [ 2.4040488, 6.3542339 ], [ 2.4038513, 6.353516 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 619578963, "osm_type": "ways_poly", "name": "Jardin de l'établissement 'Beer Garden'", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.45529, 6.3552736 ], [ 2.4553672, 6.3549931 ], [ 2.4554266, 6.3549497 ], [ 2.4556091, 6.3549397 ], [ 2.4559026, 6.3549797 ], [ 2.4558175, 6.355356 ], [ 2.45529, 6.3552736 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 272664033, "osm_type": "ways_poly", "name": "Place ce l'Indépendance", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.4062435, 6.3513683 ], [ 2.4062462, 6.350147 ], [ 2.4078726, 6.3501694 ], [ 2.4078563, 6.351364 ], [ 2.4062435, 6.3513683 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 1213287112, "osm_type": "ways_poly", "name": "Place de l'Amazone", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.4071244, 6.3498469 ], [ 2.4071566, 6.3482048 ], [ 2.4079988, 6.3482048 ], [ 2.4079452, 6.3498576 ], [ 2.4071244, 6.3498469 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 832159926, "osm_type": "ways_poly", "name": "Africa Land", "leisure": "park" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 2.4037367, 6.3875029 ], [ 2.4048096, 6.3862101 ], [ 2.4057269, 6.3870045 ], [ 2.4051288, 6.3877881 ], [ 2.4037367, 6.3875029 ] ] ] } }
+]
+}

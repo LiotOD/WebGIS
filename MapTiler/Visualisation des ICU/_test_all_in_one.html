@@ -1,0 +1,22 @@
+map.loadImage('img/centre_sante.png', async function(error, imageCentreSante){
+  if (error) throw error;
+  map.addImage('centre_sante_icone', imageCentreSante.data); //enlever data?
+
+
+  map.addSource('centre_sante', {
+    type: 'geojson',
+    data: 'https://api.maptiler.com/data/716749d9-2f8e-4f67-b978-6c9cad6ebdb1/features.json?key=fJIJM9u7ZdZQhJMMXzg7'
+  });
+
+  map.addLayer({
+    id: 'centre_sante_id',
+    type: 'symbol',
+    source: 'centre_sante',
+    layout: {
+        'icon-image': 'centre_sante_icone',
+        'icon-size': 0.05
+    }
+  });
+
+
+});

@@ -1,6 +1,6 @@
 Mon apprentissage avec le dsk de MapTiler
 
-/* 1- Démmarage */
+//* 1- Démmarage *//
 
 - Créer un fichier html basique
 - Créer un autre fichier css et un js en les liant au html 
@@ -9,7 +9,7 @@ Mon apprentissage avec le dsk de MapTiler
     <script src="script.js"></script> dans le body)
 - Dans le js on ajoute la clé API et la variable map avec const map = new maptilersdk.Map({ options,}) un peu comme avec openlayers
 
-/* 2- Customisation basique */
+//* 2- Customisation basique *//
 les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 #Changer le centrage : pointer les coordonnées sur la zone voulue et définir le zoom par défaut avec les paramètres center et zoom.
@@ -133,6 +133,41 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                      
 
             #### FIN ####
+
+//* 3- Customisation Avancée *//
+
+    /* 3-1- Ajouter des photos dans une popup */
+       
+        Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les popup
+             |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
+                                 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+                                 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
+                                 |---> Contenu = 'balise html avec classe css' + InfoVoulue + 'fermer la balise' // le contenu à afficher avec la balise html voulue et la classe css de l'objet si on veut le styler dans le fichier css
+                                 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
+                                        /* Code pour afficher la photo si l'attribut photoUrl existe */ 
+                                 |---> if(photoUrl) { contenu += '<img src="' + photoUrl + '" alt="' + name + '" class="popup-photo">'; } 
+                                 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+                                             |---> .setLngLat(e.lngLat) // récupérer les coordonnées
+                                             |---> .setHTML(contenu) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
+                                             |---> .addTo(map) // ahouter la popup à la carte
+
+
+                    # Explication du code sur la partie affichage de la photo #
+
+             |---> Pourquoi la condition if est-elle utilisée ?
+                    |---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image. Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
+                         |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des erreurs ou des comportements inattendus.
+                         |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher d'image vide ou de laisser de l'espace inutile dans la popup.
+
+             |---> code            
+                    |---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement. 
+                    |---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. Permet de concaténer des chaînes de caractères ou additionner des nombres.
+
+
+
+
+
+
 
 
 

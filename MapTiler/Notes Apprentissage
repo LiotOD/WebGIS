@@ -124,18 +124,12 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                         2-2-7-2 ####### Pour des polygones #######
                                 
                                              |---> Popup // créer la variable popup
-                                             |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
-                                                             |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+                                             |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
                                                              |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-                                                             |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
                                                              |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-                                                                         |---> .setLngLat(coordonnées) // récupérer les coordonnées
-                                                                         |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+                                                                         |---> .setLngLat(e.lngLat) // récupérer les coordonnées
+                                                                         |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
                                                                          |---> .addTo(map) // ahouter la popup à la carte
-
-
-
-
                      
 
             #### FIN ####

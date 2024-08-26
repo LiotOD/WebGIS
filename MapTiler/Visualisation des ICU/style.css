@@ -9,3 +9,18 @@ body {
     bottom: 0;
     width: 100%;
   }
+
+/* Style pour l'image dans la popup */
+.popup-photo {
+  width: 100%; /* L'image occupe toute la largeur de la popup */
+  height: auto; /* La hauteur s'ajuste automatiquement pour préserver le ratio */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute une ombre autour de l'image */
+  margin-top: 10px; /* Espacement au-dessus de l'image */
+}
+
+/* Style pour centrer le nom de l'entité */
+.popup-titre {
+  text-align: center; /* Centre le texte horizontalement */
+  margin: 0; /* Retire les marges par défaut */
+}

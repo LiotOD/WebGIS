@@ -158,10 +158,17 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                     |---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image. Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
                          |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des erreurs ou des comportements inattendus.
                          |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher d'image vide ou de laisser de l'espace inutile dans la popup.
-
-             |---> code            
-                    |---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement. 
                     |---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. Permet de concaténer des chaînes de caractères ou additionner des nombres.
+             
+            |---> code            
+                    |---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
+                        |---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
+                                
+                    |---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
+                    |---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
+
+
+
 
 
 

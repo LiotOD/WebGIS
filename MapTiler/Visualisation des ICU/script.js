@@ -7,7 +7,7 @@ const map = new maptilersdk.Map({
   zoom: 12, // starting zoom
 });
 
-// ajouter une couche de tuile vectorielle stockée sur le cloud mapTiler
+// ajouter le gestionnaire d'évènement
 
 map.on('load', async function() {
 
@@ -74,7 +74,7 @@ map.on('load', async function() {
       'paint': {}
     });
 
-    // ajouter une couche vectorielle linéaire geojson stockée en local avec une symbologie en symbole
+    // ajouter une couche vectorielle linéaire geojson stockée en local avec une symbologie basique
 
     map.addSource('contours', {
       type: 'geojson',
@@ -90,7 +90,34 @@ map.on('load', async function() {
         'line-width' : 0.8,
         'line-opacity': 0.6
       }
-    })
+    });
+
+    // ajouter une couche vectorielle polygonale geojson stockée en local avec une symbologie unique
+
+    map.addSource('parcs',{
+      type: 'geojson',
+      data: 'data/parcs.geojson'
+    });
+
+    map.addLayer({
+      'id':'parcs_id',
+      'type': 'fill',
+      'source': 'parcs',
+      'paint':{
+          'fill-color': '#52a851',
+          'fill-opacity': 0.8,
+          'fill-outline-color': '#185717',
+
+      }
+
+    });
+
+
+
+
+
+
+
 
     /*Evènements et comportement du curseur sur plusieurs couches */
 
@@ -145,12 +172,12 @@ map.on('load', async function() {
     // 1-2- Evènement s'approcher d'une entité de la couche avec le curseur de la souris 
 
     map.on('mouseenter', 'urgences_id', function () {
-        map.getCanvas().style.cursor = 'pointer';
+        map.getCanvas().style.cursor = 'pointer'; // affecter un style de pointeur à la souris
     });
 
     // 1-3- Evènement s'éloigner d'une entité de la couche avec le curseur de la souris 
     map.on('mouseleave', 'urgences_id', function () {
-        map.getCanvas().style.cursor = '';
+        map.getCanvas().style.cursor = ''; // revenir au style par défaut
     });
 
 
@@ -169,7 +196,9 @@ map.on('load', async function() {
           map.getCanvas().style.cursor = 'pointer';
 
           var coordinates = e.features[0].geometry.coordinates.slice(); // récupérer les coordonnées
+
           var nom = e.features[0].properties.nom_loc; // récupérer le nom de l'Arrondissement
+          
           var population = e.features[0].properties.population; // récupérer l'effectif de la population de l'Arrondissement
 
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -180,7 +209,8 @@ map.on('load', async function() {
             .setLngLat(coordinates)
             .setHTML(
                     '<h3>'+ "Nom : " + nom + '</h3>' + // on mets la valeur du nom défini précédemment dans une balise de titre 3 avec un préfixe
-                    '<h3>'+ "Pop : " + population + '<span style="font-size: smaller;"> ' + " Habitants"+ '</span>' + '</h3>' + // on mets la valeur de la population définie précédemment dans une balise de titre 3 et on ajoute le suffixe habitants    
+                    '<h3>'+ "Pop : " + population + '<span style="font-size: smaller;"> ' + " Habitants"+ '</span>' + '</h3>' + 
+                    // on mets la valeur de la population définie précédemment dans une balise de titre 3 et on ajoute le suffixe habitants    
                     '<p>'+ "Source : RGPH4, 2013, INSTAD" + '</p>' // on ajoute une source
 
             )
@@ -191,10 +221,53 @@ map.on('load', async function() {
     // 2-3- Evènement s'éloigner d'une entité de la couche avec le curseur de la souris 
 
     map.on('mouseleave', 'arrondissements_id', function(e) {
-      map.getCanvas().style.cursor = '';
-      popupArrondissements.remove()
+      map.getCanvas().style.cursor = ''; // le curseur repasse au style par défaut
+      popupArrondissements.remove() // enlever le popup 
 
     });
+
+  /* 3- Couche parcs avec ID parcs_id */
+ 
+  // 3-1- Créer le popup
+
+  var PopupParcs = new maptilersdk.Popup({
+    closeButton: false,
+    closeOnClick: false
+  })
+
+
+  // 3-2 Ajouter l'évènement quand on s'approche d'une entité mais avec une condition qui affiche les photos quand l'url a une valeur 
+
+  map.on('mouseenter', 'parcs_id', function(e){
+
+    map.getCanvas().style.cursor = 'pointer'; // affecter un style de pointeur à la souris
+
+    var name = e.features[0].properties.name; // Récupérer le nom
+
+    var photoUrl = e.features[0].properties.photo; // récupérer l'url de la photo depuis l'attribut qui le stocke
+
+    var contenu = '<h4 class="popup-titre">' + name + '</h4>'; // le contenu à afficher dans la popup
+
+    // condition qui affiche les photos quand l'url a une valeur 
+
+    if(photoUrl) { // si l'attribut photoUrl existe
+
+      contenu += '<img src="' + photoUrl + '" alt="' + name + '" class="popup-photo">';
+
+    }
+
+
+    PopupParcs
+      .setLngLat(e.lngLat)
+      .setHTML(contenu) // Texte à afficher en récupérant la valeur de la variable contenu
+      .addTo(map);
+  });
+
+  map.on('mouseleave', 'parcs_id', function(e){
+    map.getCanvas().style.cursor= ''; // revenir au style par défaut
+    PopupParcs.remove(); // enlever le popup 
+  })
+
 
 
 

@@ -28,7 +28,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 /* 2-2- IMPORTANT : STRUCTURE DES SYNTAXES PRINCIPALES */     
 
-            1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
+            2-2-1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
             
             -----> map.on('load', function ()| //gestionnaire d'évènement
                                              |---> Image //source de l'image
@@ -54,7 +54,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             
             #### FIN ####
 
-            2- #######Structure de la syntaxe pour ajouter une image #######
+            2-2-2- #######Structure de la syntaxe pour ajouter une image #######
             
             ----->    const image = await map.loadImage('chemin vers l'image');
                       map.addImage('nomdelobjetimage', image.data);
@@ -62,7 +62,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             #### FIN ####
 
 
-            3- #######Structure de la syntaxe pour ajouter une source de données #######
+            2-2-3- #######Structure de la syntaxe pour ajouter une source de données #######
             
             ----->  addSource| //'nomdelavariabledonnee',{
                                  |---> type // le type de la data : geojson, vector, raster, etc.
@@ -71,7 +71,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                             }
             #### FIN ####
 
-            4- #######Structure de la syntaxe pour ajouter une couche associée à la source #######
+            2-2-4- #######Structure de la syntaxe pour ajouter une couche associée à la source #######
             
             ----->  addLayer | {
                                  |---> id // identifiant unique de la couche
@@ -89,7 +89,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                              }
             #### FIN ####
 
-            5- #######Structure de la syntaxe pour ajouter un evènement lié à une couche #######
+            2-2-5- #######Structure de la syntaxe pour ajouter un evènement lié à une couche #######
             
                                              |---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
                                                              |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
@@ -99,7 +99,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
             #### FIN ####
 
-         6- #######Structure de la syntaxe pour ajouter un evènement lié au comportement du curseur de la souris sur une couche #######
+         2-2-6- #######Structure de la syntaxe pour ajouter un evènement lié au comportement du curseur de la souris sur une couche #######
             
                                              |---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur à proximité d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
                                                              |---> map.getCanvas().style.cursor = 'pointer'; // définir le style du curseur
@@ -107,6 +107,13 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
             
                                              |---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
                                                              |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
+
+
+
+
+
+
+
 
 
 

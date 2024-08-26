@@ -90,13 +90,10 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                              }
             #### FIN ####
 
-            2-2-5- #######Structure de la syntaxe pour ajouter un evènement lié à une couche #######
+            2-2-5- #######Structure de la syntaxe pour ajouter un evènement au clic sur une couche #######
             
                                              |---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
-                                                             |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
-                                                             |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-                                                             |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
-                                                             |---> Popup //ajouter une popup 
+                                                             |---> comportement attendu // afficher des valeurs, changement de style, etc.
 
             #### FIN ####
 
@@ -109,7 +106,39 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                                              |---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
                                                              |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
 
+            2-2-7- ####### Structure de la syntaxe pour ajouter une popup #######
 
+                        2-2-7-1 ####### Pour des points #######
+                                
+                                             |---> Popup // créer la variable popup
+                                             |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
+                                                             |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+                                                             |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+                                                             |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
+                                                             |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+                                                                         |---> .setLngLat(coordonnées) // récupérer les coordonnées
+                                                                         |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+                                                                         |---> .addTo(map) // ahouter la popup à la carte
+
+
+                        2-2-7-2 ####### Pour des polygones #######
+                                
+                                             |---> Popup // créer la variable popup
+                                             |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
+                                                             |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+                                                             |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+                                                             |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
+                                                             |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+                                                                         |---> .setLngLat(coordonnées) // récupérer les coordonnées
+                                                                         |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+                                                                         |---> .addTo(map) // ahouter la popup à la carte
+
+
+
+
+                     
+
+            #### FIN ####
 
 
 

@@ -20,7 +20,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                   - Finir avec .addTo(map)
             
             #### POINT IMPORTANT ####
-            -- Il faut ajouter d'abord un gestionnaire d'évènements avant d'ajouter des couches vectorielles --
+            -- Il faut ajouter d'abord un gestionnaire d'évènements avant d'ajouter les data et les évènements --
                   map.on('load', function() {
                   
                   });

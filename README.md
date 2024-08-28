@@ -2,7 +2,7 @@
 # 🌍 Apprentissage du WebSIG
 Bienvenue dans mon dépôt GitHub consacré à mon apprentissage des technologies de WebSIG (Systèmes d'Information Géographique sur le Web). Ce dépôt rassemble divers projets et exercices que j'ai réalisés pour me familiariser avec les outils et les bibliothèques les plus populaires du WebSIG, notamment OpenLayers, Mviewer, l'API JavaScript d'ESRI, le SDK de MapTiler, et Mapbox.
 
-# 🎯 # Objectif
+# 🎯 Objectif
 L'objectif de ce dépôt est de documenter mon parcours d'apprentissage dans le domaine des SIG en ligne et de partager des exemples concrets d'utilisation de ces technologies. Chaque dossier du dépôt contient des projets et des scripts démontrant comment utiliser les différentes bibliothèques pour créer des cartes interactives, manipuler des données géospatiales, et intégrer des fonctionnalités avancées de visualisation géographique.
 
 # 🛠️ Technologies et Projets

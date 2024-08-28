@@ -134,9 +134,20 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
             #### FIN ####
 
-//* 3- Customisation Avancée *//
 
-    /* 3-1- Ajouter des photos dans une popup */
+//* 3- Contrôles *//
+
+    /* 3-1- Ajouter une échelle  */
+
+             |--->ScaleControl // nouveau contrôle d'échelle
+                                 |---> maxWidth  //  longueur en pixel de la barre d'échelle
+                                 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
+             |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
+
+
+//* 4- Customisation Avancée *//
+
+    /* 4-1- Ajouter des photos dans une popup */
        
         Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les popup
              |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
@@ -172,14 +183,6 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 
 
-//* 4- Contrôles *//
-
-    /* 4-1- Ajouter une échelle  */
-
-             |--->ScaleControl // nouveau contrôle d'échelle
-                                 |---> maxWidth  //  longueur en pixel de la barre d'échelle
-                                 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
-             |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
 
 
 

@@ -270,5 +270,25 @@ map.on('load', async function() {
 
 
 
+  // Ajouter une échelle
+
+  const scale = new maptilersdk.ScaleControl({ // nouveau contrôle d'échelle
+    maxWidth: 80, // Longueur maximale du contrôle d'échelle en pixels.
+    unit: 'metric' // Unité de distance ( 'impérial' , 'métrique' ou 'nautique' ).
+  });
+  map.addControl(scale); // ajouter l'échelle définie
+
+
+  // Ajouter un logo
+  const logo = new maptilersdk.MaptilerLogoControl({ // ajouter le controle
+    logoURL: "img/logo_rouge.svg", // chemin ou adresse
+    linkURL: "https://www.ltodome.com" // l'adresse où aller quand on clic sur le lien
+  });
+  map.addControl(logo, 'bottom-right'); // position 
+
+  // Ajouter un bouton pour passer en 3D
+  const terrain3d = new maptilersdk.MaptilerTerrainControl(); // ajouter le controle
+  map.addControl(terrain3d, 'top-left'); //position
+
 
 });

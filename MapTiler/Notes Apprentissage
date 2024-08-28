@@ -151,7 +151,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                                  |---> linkURK // adresse où pointe le logo si on veut 
              |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
 
-    /* 3-3- Ajouter un logo personnalisé  */
+    /* 3-3- Ajouter un bouton pour la visualisation en 3D */
 
              |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
              |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right

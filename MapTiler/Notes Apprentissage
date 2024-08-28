@@ -144,6 +144,16 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
                                  |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
              |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
 
+    /* 3-1- Ajouter un logo personnalisé  */
+
+             |--->MaptilerLogoControl // nouveau contrôle d'ajout de logo
+                                 |---> logoURL //  chemin ou adresse de l'image du logo
+                                 |---> linkURK // adresse où pointe le logo si on veut 
+             |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran
+
+
+
+
 
 //* 4- Customisation Avancée *//
 

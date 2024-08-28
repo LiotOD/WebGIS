@@ -172,7 +172,14 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 
 
+//* 4- Contrôles *//
 
+    /* 4-1- Ajouter une échelle  */
+
+             |--->ScaleControl // nouveau contrôle d'échelle
+                                 |---> maxWidth  //  longueur en pixel de la barre d'échelle
+                                 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
+             |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
 
 
 

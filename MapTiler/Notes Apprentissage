@@ -31,24 +31,24 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 	2-2-1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
 	
 	-----> map.on('load', function ()| //gestionnaire d'évènement
-					 |---> Image //source de l'image
-					 |---> addImage //ajouter l'image
-					 |---> addSource //source de la donnée
-					 |---> addLayer //ajouter la donnée
-					 |---> Image2 //source de l'image 2
-					 |---> addImage //ajouter l'image 2
-					 |---> addSource //source de la donnée 2
-					 |---> addLayer //ajouter la donnée 2
-					 |---> addSource //source de la donnée 3
-					 |---> addLayer //ajouter la donnée 3
-					 |---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
-													 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
-													 |---> Autre variable // récupérer l'info voulue
-													 |---> Popup //ajouter une popup 
-					 |---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris est sur une entité le curseur change de style
-													 |---> getCanvas().style.cursor // mettre la valeur du style voulu
-					 |---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris n'est sur une entité le curseur change de style
-													 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+			 |---> Image //source de l'image
+			 |---> addImage //ajouter l'image
+			 |---> addSource //source de la donnée
+			 |---> addLayer //ajouter la donnée
+			 |---> Image2 //source de l'image 2
+			 |---> addImage //ajouter l'image 2
+			 |---> addSource //source de la donnée 2
+			 |---> addLayer //ajouter la donnée 2
+			 |---> addSource //source de la donnée 3
+			 |---> addLayer //ajouter la donnée 3
+			|---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
+				 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
+				 |---> Autre variable // récupérer l'info voulue
+				 |---> Popup //ajouter une popup 
+			|---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris est sur une entité le curseur change de style
+				 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+			|---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris n'est sur une entité le curseur change de style
+				 |---> getCanvas().style.cursor // mettre la valeur du style voulu
 
 
 	
@@ -65,9 +65,9 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 	2-2-3- #######Structure de la syntaxe pour ajouter une source de données #######
 	
 	----->  addSource| //'nomdelavariabledonnee',{
-					 |---> type // le type de la data : 'geojson', 'vector', 'raster', etc.
-					 |---> url // ajouter l'url si c'est une tuile vectorielle
-					 |---> data // source de la donnée si c'est du geojson
+			 |---> type // le type de la data : 'geojson', 'vector', 'raster', etc.
+			 |---> url // ajouter l'url si c'est une tuile vectorielle
+			 |---> data // source de la donnée si c'est du geojson
 			}
 	#### FIN ####
 
@@ -79,57 +79,58 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 			 |---> type // mettre le type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
 			 |---> source layer // uniquement pour les tuiles vectorielles | identifiant unique de la couche présente dans la tuile vectorielle. Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle')
 			 |---> layout  {// ici il faut mettre les détails pour l'icone si on va sur un type de symbologie symbol
-													|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici avec un const et un map.addImage
-													|---> icon-size : valeur, // taille voulue pour l'icone
-													|---> visibility : "visible" ou "none", // rendre la couche visible ou non
-													|---> etc          
+				|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici avec un const et un map.addImage
+				|---> icon-size : valeur, // taille voulue pour l'icone
+				|---> visibility : "visible" ou "none", // rendre la couche visible ou non
+				|---> etc          
 			 |---> paint // ici il faut mettre les détails associés au type de symbologie par exemple la couleur, l'opacité, les bordures etc.
-													|---> fill-color : valeur,// couleur
-													|---> fill-opacity : valeur, // opacité
-													|---> etc
-	 }
+				|---> fill-color : valeur,// couleur
+				|---> fill-opacity : valeur, // opacité
+				|---> etc
+	 		}
+
 	#### FIN ####
 
 	2-2-5- #######Structure de la syntaxe pour ajouter un evènement au clic sur une couche #######
 	
-		 |---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
-										 |---> comportement attendu // afficher des valeurs, changement de style, etc.
+		|---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
+			 |---> comportement attendu // afficher des valeurs, changement de style, etc.
 
 	#### FIN ####
 
 2-2-6- #######Structure de la syntaxe pour ajouter un evènement lié au comportement du curseur de la souris sur une couche #######
 	
-			 |---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur à proximité d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
-											 |---> map.getCanvas().style.cursor = 'pointer'; // définir le style du curseur
-
-
-			 |---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
-											 |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
+		|---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur à proximité d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+			 |---> map.getCanvas().style.cursor = 'pointer'; // définir le style du curseur
+		
+		
+		|---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+			 |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
 
 	2-2-7- ####### Structure de la syntaxe pour ajouter une popup #######
 
 		2-2-7-1 ####### Pour des points #######
-						
-			 |---> Popup // créer la variable popup
-			 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
-											 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
-											 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-											 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
-											 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-																	 |---> .setLngLat(coordonnées) // récupérer les coordonnées
-																	 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
-																	 |---> .addTo(map) // ahouter la popup à la carte
+								
+		|---> Popup // créer la variable popup
+		|---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
+			 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+			 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+			 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
+			 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+				 |---> .setLngLat(coordonnées) // récupérer les coordonnées
+				 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+				 |---> .addTo(map) // ahouter la popup à la carte
 
 
-		2-2-7-2 ####### Pour des polygones #######
+2-2-7-2 ####### Pour des polygones #######
 						
-			 |---> Popup // créer la variable popup
-			 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
-											 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-											 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-																	 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
-																	 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
-																	 |---> .addTo(map) // ahouter la popup à la carte
+	 |---> Popup // créer la variable popup
+	 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
+		 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+		 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+			 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
+			 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
+			 |---> .addTo(map) // ahouter la popup à la carte
 
 
 	#### FIN ####
@@ -139,26 +140,26 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
     /* 3-1- Ajouter une échelle  */
 
-		 |--->ScaleControl // nouveau contrôle d'échelle
-												 |---> maxWidth  //  longueur en pixel de la barre d'échelle
-												 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
-		 |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
+ |--->ScaleControl // nouveau contrôle d'échelle
+	 |---> maxWidth  //  longueur en pixel de la barre d'échelle
+	 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
+ |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
 
     /* 3-2- Ajouter un logo personnalisé  */
-
-		 |--->MaptilerLogoControl // nouveau contrôle d'ajout de logo
-												 |---> logoURL //  chemin ou adresse de l'image du logo
-												 |---> linkURK // adresse où pointe le logo si on veut 
-		 |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
-
-    /* 3-3- Ajouter un bouton pour la visualisation en 3D */
-
-		 |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
-		 |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
+	
+	 |--->MaptilerLogoControl // nouveau contrôle d'ajout de logo
+		 |---> logoURL //  chemin ou adresse de l'image du logo
+		 |---> linkURK // adresse où pointe le logo si on veut 
+	 |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
+	
+/* 3-3- Ajouter un bouton pour la visualisation en 3D */
+	
+	 |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
+	 |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
 
     /* 3-3- Ajouter un bouton pour le plein écran*/
 
-		fullscreenControl: // ajouter l'option true dans les paramètres de la variable map
+	fullscreenControl: // ajouter l'option true dans les paramètres de la variable map
 
 
 //* 4- Customisation Avancée *//
@@ -167,34 +168,34 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les popup
 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
-		 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-		 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
-		 |---> Contenu = 'balise html avec classe css' + InfoVoulue + 'fermer la balise' // le contenu à afficher avec la balise html voulue et la classe css de l'objet si on veut le styler dans le fichier css
-		 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
-						/* Code pour afficher la photo si l'attribut photoUrl existe */ 
-		 |---> if(photoUrl) { contenu += '<img src="' + photoUrl + '" alt="' + name + '" class="popup-photo">'; } 
-		 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-								 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
-								 |---> .setHTML(contenu) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
-								 |---> .addTo(map) // ahouter la popup à la carte
+	 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+	 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
+	 |---> Contenu = 'balise html avec classe css' + InfoVoulue + 'fermer la balise' // le contenu à afficher avec la balise html voulue et la classe css de l'objet si on veut le styler dans le fichier css
+	 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
+					/* Code pour afficher la photo si l'attribut photoUrl existe */ 
+	 |---> if(photoUrl) { contenu += '<img src="' + photoUrl + '" alt="' + name + '" class="popup-photo">'; } 
+	 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+		 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
+		 |---> .setHTML(contenu) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
+		 |---> .addTo(map) // ahouter la popup à la carte
 
 
 						# Explication du code sur la partie affichage de la photo #
 
-		 |---> Pourquoi la condition if est-elle utilisée ?
-						|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image. Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
-								 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des erreurs ou des comportements inattendus.
-								 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher d'image vide ou de laisser de l'espace inutile dans la popup.
-						|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. Permet de concaténer des chaînes de caractères ou additionner des nombres.
-		 
-		|---> code            
-						|---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
-								|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
-												
-						|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
-						|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
-
-
+	|---> Pourquoi la condition if est-elle utilisée ?
+		|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image. Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
+			 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des erreurs ou des comportements inattendus.
+			 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher d'image vide ou de laisser de l'espace inutile dans la popup.
+		|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. Permet de concaténer des chaînes de caractères ou additionner des nombres.
+	
+	|---> code            
+		|---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
+			|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
+								
+		|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
+		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
+	
+	
 
 
 

@@ -31,24 +31,24 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 	2-2-1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
 	
 	-----> map.on('load', function ()| //gestionnaire d'évènement
-			 |---> Image //source de l'image
-			 |---> addImage //ajouter l'image
-			 |---> addSource //source de la donnée
-			 |---> addLayer //ajouter la donnée
-			 |---> Image2 //source de l'image 2
-			 |---> addImage //ajouter l'image 2
-			 |---> addSource //source de la donnée 2
-			 |---> addLayer //ajouter la donnée 2
-			 |---> addSource //source de la donnée 3
-			 |---> addLayer //ajouter la donnée 3
-			|---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
-				 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
-				 |---> Autre variable // récupérer l'info voulue
-				 |---> Popup //ajouter une popup 
-			|---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris est sur une entité le curseur change de style
-				 |---> getCanvas().style.cursor // mettre la valeur du style voulu
-			|---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lorsque la souris n'est sur une entité le curseur change de style
-				 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+		 |---> Image //source de l'image
+		 |---> addImage //ajouter l'image
+		 |---> addSource //source de la donnée
+		 |---> addLayer //ajouter la donnée
+		 |---> Image2 //source de l'image 2
+		 |---> addImage //ajouter l'image 2
+		 |---> addSource //source de la donnée 2
+		 |---> addLayer //ajouter la donnée 2
+		 |---> addSource //source de la donnée 3
+		 |---> addLayer //ajouter la donnée 3
+	  	 |---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
+			 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
+			 |---> Autre variable // récupérer l'info voulue
+			 |---> Popup //ajouter une popup 
+		 |---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris est sur une entité le curseur change de style
+			 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+		 |---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris n'est pas sur une entité le curseur change de style
+			 |---> getCanvas().style.cursor // mettre la valeur du style voulu
 
 
 	
@@ -76,10 +76,12 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 	----->  addLayer | {
 			 |---> id // identifiant unique de la couche
 			 |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
-			 |---> type // mettre le type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
-			 |---> source layer // uniquement pour les tuiles vectorielles | identifiant unique de la couche présente dans la tuile vectorielle. Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle')
+			 |---> type //  type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
+			 |---> source layer // uniquement pour les tuiles vectorielles | identifiant unique de la couche présente dans la tuile vectorielle. 
+					   // Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle')
 			 |---> layout  {// ici il faut mettre les détails pour l'icone si on va sur un type de symbologie symbol
-				|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici avec un const et un map.addImage
+				|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici 
+									 // avec un const et un map.addImage
 				|---> icon-size : valeur, // taille voulue pour l'icone
 				|---> visibility : "visible" ou "none", // rendre la couche visible ou non
 				|---> etc          
@@ -93,18 +95,18 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 	2-2-5- #######Structure de la syntaxe pour ajouter un evènement au clic sur une couche #######
 	
-		|---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic. Le e désigne un écouteur d'évènement
+		|---> map.on('click', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // ajouter un évènement sur une couche. Le e désigne un écouteur d'évènement
 			 |---> comportement attendu // afficher des valeurs, changement de style, etc.
 
 	#### FIN ####
 
 2-2-6- #######Structure de la syntaxe pour ajouter un evènement lié au comportement du curseur de la souris sur une couche #######
 	
-		|---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur à proximité d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+		|---> map.on('mouseenter', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement 
 			 |---> map.getCanvas().style.cursor = 'pointer'; // définir le style du curseur
 		
 		
-		|---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement lié au style du curseur quand il est éloigné d'une entité de la couche consernée : par ex ici lors de l'évènement curseur de la souris sur une entité. clic. 
+		|---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement  
 			 |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
 
 	2-2-7- ####### Structure de la syntaxe pour ajouter une popup #######
@@ -170,7 +172,8 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
 	 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
 	 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
-	 |---> Contenu = 'balise html avec classe css' + InfoVoulue + 'fermer la balise' // le contenu à afficher avec la balise html voulue et la classe css de l'objet si on veut le styler dans le fichier css
+	 |---> Contenu = 'balise html avec classe css' + InfoVoulue + 'fermer la balise' 
+			// le contenu à afficher avec la balise html voulue et la classe css de l'objet si on veut le styler dans le fichier css
 	 |---> URL = e.features[0].properties.attributURL // récupérer l'url de la photo
 					/* Code pour afficher la photo si l'attribut photoUrl existe */ 
 	 |---> if(photoUrl) { contenu += '<img src="' + photoUrl + '" alt="' + name + '" class="popup-photo">'; } 
@@ -183,17 +186,23 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 						# Explication du code sur la partie affichage de la photo #
 
 	|---> Pourquoi la condition if est-elle utilisée ?
-		|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image. Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
-			 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des erreurs ou des comportements inattendus.
-			 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher d'image vide ou de laisser de l'espace inutile dans la popup.
-		|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. Permet de concaténer des chaînes de caractères ou additionner des nombres.
+		|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image.
+			Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
+			 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des 
+					erreurs ou des comportements inattendus.
+			 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher 
+					d'image vide ou de laisser de l'espace inutile dans la popup.
+		|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. 
+			   Permet de concaténer des chaînes de caractères ou additionner des nombres.
 	
 	|---> code            
 		|---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
-			|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
+			|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> 
+								  ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
 								
 		|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
-		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
+		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant 
+					chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
 	
 	
 

@@ -156,6 +156,9 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
              |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
              |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
 
+    /* 3-3- Ajouter un bouton pour le plein écran*/
+
+                ajouter l'option fullscreenControl: true dans les paramètres de la variable map
 
 
 

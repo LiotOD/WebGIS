@@ -1,5 +1,7 @@
 maptilersdk.config.apiKey = 'fJIJM9u7ZdZQhJMMXzg7';
 
+// créer la variable de la carte
+
 const map = new maptilersdk.Map({
   container: 'map', // container's id or the HTML element to render the map
   style: maptilersdk.MapStyle.STREETS,
@@ -7,7 +9,7 @@ const map = new maptilersdk.Map({
   zoom: 12, // starting zoom
 });
 
-// ajouter le gestionnaire d'évènement
+// ajouter le gestionnaire d'évènement qui contient tout ce qui a rapport avec le chargement de la carte, les events, les données, la symbologie etc.
 
 map.on('load', async function() {
 
@@ -111,12 +113,6 @@ map.on('load', async function() {
       }
 
     });
-
-
-
-
-
-
 
 
     /*Evènements et comportement du curseur sur plusieurs couches */
@@ -291,4 +287,143 @@ map.on('load', async function() {
   map.addControl(terrain3d, 'top-left'); //position
 
 
+
 });
+
+// ajouter tout ce qui est en dehors par exemple le comportement de la barre de recherche
+
+// Fonction utilitaire pour normaliser les chaînes et supprimer les accents
+function normalizeString(str) { // créer la fonction qui prendra en argument str
+  return str // renvoie la valeur str
+    .normalize("NFD") // Normalise la chaîne en utilisant la forme de décomposition canonique
+                      // La méthode .normalize("NFD") décompose les caractères accentués en leurs composants de base. Par exemple, "é" devient "e" + "́" (lettre et accent séparés).
+    .replace(/[\u0300-\u036f]/g, "") // Suppression des accents : L'expression régulière /[\u0300-\u036f]/g recherche tous les caractères de diacritiques dans la chaîne (accents) 
+                                    // et les remplace par une chaîne vide (""). Cela supprime les accents.
+    .toLowerCase(); // Convertit la chaîne en minuscules
+}
+
+// Fonction pour calculer le centroïde d'un polygone
+function centroidPolygon(coordinates) {
+  let sumX = 0, sumY = 0, numPoints = 0;
+
+  // Les coordonnées[0] contient le contour extérieur du polygone
+  coordinates[0].forEach(coord => {
+    sumX += coord[0];
+    sumY += coord[1];
+    numPoints++;
+  });
+
+  const centerX = sumX / numPoints;
+  const centerY = sumY / numPoints;
+
+  return [centerX, centerY];
+}
+
+
+
+// Écouteur d'événements pour la barre de recherche
+
+document.getElementById('search-input').addEventListener('input', function(e) {
+  
+    /*            
+          * Structure de la syntaxe *
+            document
+                  .getElementById('search-input') // sélectionner l'élément html en faisant attention à l'ID qui doit correspondre
+                  .addEventListener('input', function(e) { // ajouter un écouteur d'évènement qui prend 
+                                    // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
+                                            //la fonction de rappel
+
+    */
+
+  var searchQuery = normalizeString(e.target.value); // Utilise la fonction normalizeString
+             /*
+              * Structure de la syntaxe *                  
+                  searchQuery // variable pour stocker la valeur tapée par l'utilisateur
+                    normalizeString // on fait appelle à la fonction de normalisation qui transforme l'argument e.target.value en une valeur normalisée selon les indications définies dans la fonction
+                    e.target.value // Accède à la valeur actuelle du champ de recherche (ce que l'utilisateur a tapé).
+                    
+            */
+
+
+  // Accède aux données de la source GeoJSON
+  var features = map.querySourceFeatures('parcs', { // Récupère les entités (features) de la source nommée 'parcs' précédemment chargée et de la couche source 'parcs_id'.
+    sourceLayer: 'parcs_id' // prendre l'ID de la couche à utiliser
+  });
+        /*
+              * Structure de la syntaxe *                
+                  map.querySourceFeatures //  C'est une méthode de Maptiler qui permet d'intérroger les entités
+                                            sous la forme  map.querySourceFeatures(source, [options]) : voir => https://docs.maptiler.com/sdk-js/api/map/#map#querysourcefeatures
+                      sourceLayer: 'ID de la couche concernée' //                     
+            */
+
+ 
+// Boucle sur les entités pour trouver celles qui correspondent à la recherche
+    features.forEach(function(feature) { // .forEach est une méthode de Js qui est utilisée pour itérer sur chaque entité récupérée (feature) dans le tableau features.
+        var name = normalizeString(feature.properties.name); // Utilise la fonction normalizeString sur l'attribut name récupérée avec feature.properties.name
+                      // Cela va faciliter la comparaison entre ce que l'utilisateur écrit et la valeur de l'attribut name de l'entité (pas de soucis d'accents des deux côtés)   
+                      
+        var osmId = feature.properties.osm_id; // Récupèrer l'ID unique OSM
+
+
+        if (name.includes(searchQuery) && osmId !== undefined) {// .include est une méthode JS qui  permet de vérifier si une chaîne de caractères contient une autre chaîne de caractères.
+              // donc ici on va vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) c'est à dire ce que l'utilisateur a tapé et qu'on a normalisé et 
+              // stocké plus haut sous la variable searchQuery
+              // et on va vérifier qu'on a bien un identifiant unique osm_id qui existe et a une valeur
+
+              // Pour centrer sur une entité c'est plus facile quand c'est un point on zoom juste sur la valeur de coordonnées mais si c'est une ligne ou un polygone c'est différent
+              // donc on va créer une variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
+
+              let centerCoordinates; // création de la variable
+
+                // Vérifie le type de géométrie pour choisir la bonne méthode de centrage
+                if (feature.geometry.type === 'Polygon') { // on regarde dans les infos de la couche le type de géométrie et si c'est un polygone
+                  centerCoordinates = centroidPolygon(feature.geometry.coordinates); // à la variable centerCoordinates, j'affecte la valeur du centroïde en faisant appel à la fonction de calcul de centroïde défini sus créé 
+                } else if (feature.geometry.type === 'Point') {
+                  centerCoordinates = feature.geometry.coordinates; // dans le cas où c'est un point bah je prnds juste les coordonées du point comme centroïde, logique on ne va pas calculer le centröide d'un point
+                } 
+
+              if (centerCoordinates) {    // on vérifie si le centroïde existe et a une valeur valide avant de faire un centrage. Comme ça on évite des bugs qui surviendraient en cas de mauvaises valeurs pour la variable centroïdes
+
+                        // Centrer la carte sur l'entité trouvée
+
+                        map.flyTo({ center: centerCoordinates, zoom: 18 }); // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
+                        // et on centre sur la valeur du centroide, et on définit l'échelle de zoom voir https://docs.maptiler.com/sdk-js/api/map/#map#flyto
+                        // on peut aussi utiliser la méthode .jumpTo https://docs.maptiler.com/sdk-js/api/map/#map#jumpto et affiner les options pour chacune des deux méthodes
+              }
+              // Optionnel : Ajouter un style pour mettre en évidence l'entité trouvée
+              map.setFeatureState(
+                // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).
+                // voir https://docs.maptiler.com/sdk-js/api/map/#map#setfeaturestate
+                // on peut définir en amont le style qui est associé à cet etat hover ou selection comme ça on rappelle l'état ici et on le mets à true, ce qui va styler l'entité comme survolée ou sélectionnée
+                { source: 'parcs', id: osmId}, // mettre dans la prartie id l'identifiant unique de chaque entité ou la clé primaire si on veut
+                { hover: true }
+              );
+        }        
+    });
+
+});
+
+// Réinitialiser l'état de toutes les entités lorsque la recherche est effacée
+// Réinitialiser l'état de toutes les entités lorsque la recherche est effacée
+document.getElementById('search-input').addEventListener('search', function(e) {
+  resetFeatureStates(); // Réinitialiser les états de mise en évidence
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

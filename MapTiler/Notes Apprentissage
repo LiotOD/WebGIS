@@ -207,8 +207,19 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 	
 
 
+//* 4- Interactions *//
 
+/* 4-1- Fonctionnalité de recherche d'entités*/
 
+	1- créer dans une html une barre de recherche : type input (voir les caractéristiques et paramètres dans html)
+  		|--->	<input type="text" id="search-input" placeholder="Rechercher un parc...">
+
+	2- définir les propriétés de la barre de recherche dans le css | les options importantes pour le style sont : 
+		|--->   top: 20px; //  placer la barre de recherche à la bonne hauteur 
+		|--->	transform: translateX(-50%); // centrer la barre
+		|--->	left: 50%; // centrer la barre
+		|--->	z-index: 1; // Assure que l'input s'affiche au-dessus de la carte 
+		|--->	width: 300px; // Largeur fixe pour la barre de recherche 
 
 
 

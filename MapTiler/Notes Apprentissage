@@ -158,7 +158,7 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
     /* 3-3- Ajouter un bouton pour le plein écran*/
 
-                ajouter l'option fullscreenControl: true dans les paramètres de la variable map
+                fullscreenControl: // ajouter l'option true dans les paramètres de la variable map
 
 
 

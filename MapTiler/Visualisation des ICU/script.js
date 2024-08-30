@@ -109,7 +109,6 @@ map.on('load', async function() {
           'fill-color': '#52a851',
           'fill-opacity': 0.8,
           'fill-outline-color': '#185717',
-
       }
 
     });

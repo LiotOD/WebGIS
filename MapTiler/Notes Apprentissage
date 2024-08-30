@@ -15,81 +15,81 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 #Changer le centrage : pointer les coordonnées sur la zone voulue et définir le zoom par défaut avec les paramètres center et zoom.
 
 /* 2-1- Ajouter un Marqueur */
-		- Créer la variable
-		- Utiliser la fonction .Marker en spécifiant les coordonnées avec .setLngLat([])
-		- Finir avec .addTo(map)
-	
-	#### POINT IMPORTANT ####
-	-- Il faut ajouter d'abord un gestionnaire d'évènements avant d'ajouter les data et les évènements --
-		map.on('load', function() {
-		
-		});
-	#### FIN ####
+- Créer la variable
+- Utiliser la fonction .Marker en spécifiant les coordonnées avec .setLngLat([])
+- Finir avec .addTo(map)
+
+#### POINT IMPORTANT ####
+-- Il faut ajouter d'abord un gestionnaire d'évènements avant d'ajouter les data et les évènements --
+map.on('load', function() {
+
+});
+#### FIN ####
 
 /* 2-2- IMPORTANT : STRUCTURE DES SYNTAXES PRINCIPALES */     
 
-	2-2-1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
+2-2-1- #######Structure de la syntaxe avec le gestionnaire d'évènement #######
+
+-----> map.on('load', function ()| //gestionnaire d'évènement
+	 |---> Image //source de l'image
+	 |---> addImage //ajouter l'image
+	 |---> addSource //source de la donnée
+	 |---> addLayer //ajouter la donnée
+	 |---> Image2 //source de l'image 2
+	 |---> addImage //ajouter l'image 2
+	 |---> addSource //source de la donnée 2
+	 |---> addLayer //ajouter la donnée 2
+	 |---> addSource //source de la donnée 3
+	 |---> addLayer //ajouter la donnée 3
+	 |---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
+		 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
+		 |---> Autre variable // récupérer l'info voulue
+		 |---> Popup //ajouter une popup 
+	 |---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris est sur une entité le curseur change de style
+		 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+	 |---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris n'est pas sur une entité le curseur change de style
+		 |---> getCanvas().style.cursor // mettre la valeur du style voulu
 	
-	-----> map.on('load', function ()| //gestionnaire d'évènement
-		 |---> Image //source de l'image
-		 |---> addImage //ajouter l'image
-		 |---> addSource //source de la donnée
-		 |---> addLayer //ajouter la donnée
-		 |---> Image2 //source de l'image 2
-		 |---> addImage //ajouter l'image 2
-		 |---> addSource //source de la donnée 2
-		 |---> addLayer //ajouter la donnée 2
-		 |---> addSource //source de la donnée 3
-		 |---> addLayer //ajouter la donnée 3
-	  	 |---> map.on('click', 'couche_concernée', function ()  // ajouter un évènement sur une couche : par ex ici lors de l'évènement clic
-			 |---> Coordonnées // récupérer les valeurs des coordonnées de chaque élément de la couche
-			 |---> Autre variable // récupérer l'info voulue
-			 |---> Popup //ajouter une popup 
-		 |---> map.on('mouseenter', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris est sur une entité le curseur change de style
-			 |---> getCanvas().style.cursor // mettre la valeur du style voulu
-		 |---> map.on('mouseleave', 'couche_concernée', function ()  // ajouter un évènement sur une couche : ex quand la souris n'est pas sur une entité le curseur change de style
-			 |---> getCanvas().style.cursor // mettre la valeur du style voulu
+	
+
+#### FIN ####
+
+2-2-2- #######Structure de la syntaxe pour ajouter une image #######
+
+----->    const image = await map.loadImage('chemin vers l'image');
+				map.addImage('nomdelobjetimage', image.data);
+
+#### FIN ####
 
 
-	
-	#### FIN ####
+2-2-3- #######Structure de la syntaxe pour ajouter une source de données #######
 
-	2-2-2- #######Structure de la syntaxe pour ajouter une image #######
-	
-	----->    const image = await map.loadImage('chemin vers l'image');
-						map.addImage('nomdelobjetimage', image.data);
-	
-	#### FIN ####
+----->  addSource| //'nomdelavariabledonnee',{
+	 |---> type // le type de la data : 'geojson', 'vector', 'raster', etc.
+	 |---> url // ajouter l'url si c'est une tuile vectorielle
+	 |---> data // source de la donnée si c'est du geojson
+	}
+#### FIN ####
 
+2-2-4- #######Structure de la syntaxe pour ajouter une couche associée à la source #######
 
-	2-2-3- #######Structure de la syntaxe pour ajouter une source de données #######
-	
-	----->  addSource| //'nomdelavariabledonnee',{
-			 |---> type // le type de la data : 'geojson', 'vector', 'raster', etc.
-			 |---> url // ajouter l'url si c'est une tuile vectorielle
-			 |---> data // source de la donnée si c'est du geojson
-			}
-	#### FIN ####
-
-	2-2-4- #######Structure de la syntaxe pour ajouter une couche associée à la source #######
-	
-	----->  addLayer | {
-			 |---> id // identifiant unique de la couche
-			 |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
-			 |---> type //  type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
-			 |---> source layer // uniquement pour les tuiles vectorielles | identifiant unique de la couche présente dans la tuile vectorielle. 
-					   // Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle')
-			 |---> layout  {// ici il faut mettre les détails pour l'icone si on va sur un type de symbologie symbol
-				|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici 
-									 // avec un const et un map.addImage
-				|---> icon-size : valeur, // taille voulue pour l'icone
-				|---> visibility : "visible" ou "none", // rendre la couche visible ou non
-				|---> etc          
-			 |---> paint // ici il faut mettre les détails associés au type de symbologie par exemple la couleur, l'opacité, les bordures etc.
-				|---> fill-color : valeur,// couleur
-				|---> fill-opacity : valeur, // opacité
-				|---> etc
-	 		}
+----->  addLayer | {
+	 |---> id // identifiant unique de la couche
+	 |---> source // source de la donnée (mettre le nom de la variable déclarée dans addSource correspondant
+	 |---> type //  type de symbologie qu'on veut appliquer à la couche "fill", "line", "symbol", "circle", "heatmap", "fill-extrusion", "raster", "hillshade", "background".
+	 |---> source layer // uniquement pour les tuiles vectorielles | identifiant unique de la couche présente dans la tuile vectorielle. 
+			   // Ce n'est pas forcément le nom donnée à la tuile (il peut avoir plusieurs couches dans une tuile vectorielle')
+	 |---> layout  {// ici il faut mettre les détails pour l'icone si on va sur un type de symbologie symbol
+		|---> icon-image : la source de l'icone , // si on l'avait déclaré précédemment, il faut juste mettre le nom de la variable sinon faire la déclaration ici 
+							 // avec un const et un map.addImage
+		|---> icon-size : valeur, // taille voulue pour l'icone
+		|---> visibility : "visible" ou "none", // rendre la couche visible ou non
+		|---> etc          
+	 |---> paint // ici il faut mettre les détails associés au type de symbologie par exemple la couleur, l'opacité, les bordures etc.
+		|---> fill-color : valeur,// couleur
+		|---> fill-opacity : valeur, // opacité
+		|---> etc
+	}
 
 	#### FIN ####
 
@@ -113,26 +113,26 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
 	2-2-7-1 ####### Pour des points #######
 							
-	|---> Popup // créer la variable popup
-	|---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
-		 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
-		 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-		 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
-		 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-			 |---> .setLngLat(coordonnées) // récupérer les coordonnées
-			 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
-			 |---> .addTo(map) // ahouter la popup à la carte
+|---> Popup // créer la variable popup
+|---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
+	 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+	 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+	 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
+	 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+		 |---> .setLngLat(coordonnées) // récupérer les coordonnées
+		 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+		 |---> .addTo(map) // ahouter la popup à la carte
 
 
 2-2-7-2 ####### Pour des polygones #######
 						
-	 |---> Popup // créer la variable popup
-	 |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
-		 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-		 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-			 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
-			 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
-			 |---> .addTo(map) // ahouter la popup à la carte
+ |---> Popup // créer la variable popup
+ |---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic ou survol
+	 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+	 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+		 |---> .setLngLat(e.lngLat) // récupérer les coordonnées
+		 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
+		 |---> .addTo(map) // ahouter la popup à la carte
 
 
 	#### FIN ####
@@ -142,26 +142,26 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 
     /* 3-1- Ajouter une échelle  */
 
- |--->ScaleControl // nouveau contrôle d'échelle
+ |---> ScaleControl // nouveau contrôle d'échelle
 	 |---> maxWidth  //  longueur en pixel de la barre d'échelle
 	 |---> unit // unité : 'imperial' , 'metric' or 'nautical' 
- |--->map.addControl(variable_echelle) //  ajouter l'échelle définie
+ |---> map.addControl(variable_echelle) //  ajouter l'échelle définie
 
     /* 3-2- Ajouter un logo personnalisé  */
 	
-	 |--->MaptilerLogoControl // nouveau contrôle d'ajout de logo
-		 |---> logoURL //  chemin ou adresse de l'image du logo
-		 |---> linkURK // adresse où pointe le logo si on veut 
-	 |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
-	
+ |--->MaptilerLogoControl // nouveau contrôle d'ajout de logo
+	 |---> logoURL //  chemin ou adresse de l'image du logo
+	 |---> linkURK // adresse où pointe le logo si on veut 
+ |--->map.addControl(variable_logo, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
+
 /* 3-3- Ajouter un bouton pour la visualisation en 3D */
 	
-	 |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
-	 |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
+ |--->maptilersdk.MaptilerTerrainControl // nouveau contrôle d'ajout du bouton 3D
+ |--->map.addControl(variable_bouton3D, 'bottom-right') //  position sur l'écran : top-left top-right bottom-left bottom-right
 
     /* 3-3- Ajouter un bouton pour le plein écran*/
 
-	fullscreenControl: // ajouter l'option true dans les paramètres de la variable map
+fullscreenControl: // ajouter l'option true dans les paramètres de la variable map
 
 
 //* 4- Customisation Avancée *//
@@ -182,27 +182,30 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 		 |---> .setHTML(contenu) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + Info récupérée + '</h3>' 
 		 |---> .addTo(map) // ahouter la popup à la carte
 
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+|				// # Explication du code sur la partie affichage de la photo # //
+|				
+|	|---> Pourquoi la condition if est-elle utilisée ?
+|		|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image.
+|			Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
+|			 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des 
+|					erreurs ou des comportements inattendus.
+|			 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher 
+|					d'image vide ou de laisser de l'espace inutile dans la popup.
+|		|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. 
+|			   Permet de concaténer des chaînes de caractères ou additionner des nombres.
+|	
+|	|---> code            
+|		|---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
+|			|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> 
+|								  ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
+|								
+|		|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
+|		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant 
+|					chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée	
+|
+|____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-						# Explication du code sur la partie affichage de la photo #
-
-	|---> Pourquoi la condition if est-elle utilisée ?
-		|---> La condition if (photoUrl) vérifie si l'URL de la photo existe avant d'essayer d'afficher l'image.
-			Elle n'est pas obligatoire mais voici les raisons pour lesquelles elle est souvent utilisée :    
-			 |---> 1-  Éviter les erreurs : Si photoUrl est undefined ou null, essayer de l'utiliser comme source (src) pour une balise <img> pourrait entraîner des 
-					erreurs ou des comportements inattendus.
-			 |---> 2-  Afficher uniquement lorsque cela est pertinent : Si certaines entités n'ont pas de photos associées, la condition permet de ne pas afficher 
-					d'image vide ou de laisser de l'espace inutile dans la popup.
-		|---> PS : L'opérateur += en JavaScript est un opérateur d'assignation qui ajoute une valeur à une variable et réassigne le résultat à cette même variable. 
-			   Permet de concaténer des chaînes de caractères ou additionner des nombres.
-	
-	|---> code            
-		|---> C'est juste la construction d'une balise img qu'on ajoute à la variable contenu déclarée initialement.
-			|---> En html une balise image ressemble à : <img src="programming.gif" alt="Computer Man" style="width:48px;height:48px;"> 
-								  ou <img src="source locale ou URL" alt="nom alternatif" class="classe css pour styler">          
-								
-		|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
-		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant 
-					chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée	
 
 //* 4- Interactions *//
 
@@ -219,7 +222,8 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 		|--->	width: 300px; // Largeur fixe pour la barre de recherche 
 
 	3- Normaliser les caractères : // on va s'affranchir des problèmes liés aux accents et casse en utilisant la fonction normalizeString() qui fonctionne comme ceci : 
-		|--->  function normalizeString(str) { // créer la fonction qui prendra en argument str
+		
+			|--->  function normalizeString(str) { // créer la fonction qui prendra en argument str
 		  		|--->  return str // renvoie la valeur str
 		    		|--->  .normalize("NFD") // Normalise la chaîne en utilisant la forme de décomposition canonique
 		                      // La méthode .normalize("NFD") décompose les caractères accentués en leurs composants de base. 
@@ -229,6 +233,83 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 		    		|--->  .toLowerCase(); // Convertit la chaîne en minuscules
 			}
 
+	4- Calculer le centroïde : // utile pour zoomer que le centre du polygone, sinon on peut zoomer sur un des points du polygone. Si c'était une couche ponctuelle on en aurait pas besoin.
+	
+		|--->  function centroidPolygon(coordinates) {// créer la fonction centroide qui prends la liste des coordonnées des points du polygone en argument
+			|--->  let sumX = 0, sumY = 0, numPoints = 0; // On initialise les variables : somme de toutes les coordonnées x, y et nombre de sommets
+			  // Les coordonnées[0] contient le contour extérieur du polygone
+			|--->    coordinates[0].forEach(coord => { // on premier élément du tableau coordinates et ensuite on itère sur chaque sommet
+				|--->     sumX += coord[0]; // Ajoute la coordonnée x (longitude) du point actuel à la somme sumX
+				|--->     sumY += coord[1]; //  idem pour la latitude
+				|--->      numPoints++;} // Incrémente le compteur numPoints de 1 pour chaque sommet trouvé.
+					// calcul des coordonnées X et Y du centroïde
+			|--->    const centerX = sumX / numPoints; // Calcule la coordonnée x (longitude) moyenne en divisant la somme totale de toutes les coordonnées x (sumX) par le nombre total de points (numPoints). 
+			|--->    const centerY = sumY / numPoints; // idem pour la latitude
+			|--->    return [centerX, centerY]; // renvoie un tableau contenant les coordonnées du centroïde [centerX, centerY],
+		}
+
+	5- La recherche en elle-même : // elle est dans un écouteur d'évènements addEventListener			
+
+		|--->  document.getElementById('search-input').addEventListener('input', function(e) { // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
+				|--->  var searchQuery = normalizeString(e.target.value); // Utilise la fonction normalizeString
+				|--->   var features = map.querySourceFeatures('parcs', { // Récupère les entités (features) de la source nommée 'parcs' précédemment chargée et de la couche source 'parcs_id'.
+					|--->  sourceLayer: 'parcs_id' // prendre l'ID de la couche à utiliser
+				|--->   features.forEach(function(feature) {
+					|--->  var name = normalizeString(feature.properties.name); // Utilise la fonction normalizeString sur l'attribut name récupérée avec feature.properties.name
+        				|--->  var osmId = feature.properties.osm_id; // Récupèrer l'ID unique OSM
+					|--->  if (name.includes(searchQuery) && osmId !== undefined) {// vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) et si la valeur osm_id existe
+						|---> let centerCoordinates; // création de la variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
+						|---> if (feature.geometry.type === 'Polygon') { // on regarde dans les infos de la couche le type de géométrie et si c'est un polygone
+						|---> centerCoordinates = centroidPolygon(feature.geometry.coordinates); // à la variable centerCoordinates, j'affecte la valeur du centroïde en faisant appel à la fonction de calcul de centroïde défini sus créé 
+						|---> } else if (feature.geometry.type === 'Point') {
+						|---> centerCoordinates = feature.geometry.coordinates; // dans le cas où c'est un point bah je prends juste les coordonées du point comme centroïde, logique on ne va pas calculer le centröide d'un point
+						|---> if (centerCoordinates) {    // on vérifie si le centroïde existe et a une valeur valide avant de faire un centrage. Comme ça on évite des bugs qui surviendraient en cas de mauvaises valeurs pour la variable centroïdes
+							|--->map.flyTo({ center: centerCoordinates, zoom: 17 }); // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
+						|---> map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).
+							|---> { source: 'parcs', id: osmId}, // mettre dans la prartie id l'identifiant unique de chaque entité ou la clé primaire si on veut
+							|---> { hover: true } // mettre en évidence l'entité trouvée
+
+	6- Réinitialiser l'état de toutes les entités lorsque la recherche est effacée // 
+		|---> document.getElementById('search-input').addEventListener('search', function(e) {écouteur d'événements 'search', déclenché quand l'utilisateur appuie sur la touche « Entrée » ou efface le champ de recherche
+			|---> resetFeatureStates(); // Réinitialiser les états de mise en évidence
+
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+|				// ** EXPLICATION DE LA SYNTAXE DE CHAQUE PARTIE DELICATE DU CODE** //
+|
+|		    /** Structure de la syntaxe  document.getElementById('search-input').addEventListener('input', function(e)         
+|			    document // DOM
+|				  .getElementById('search-input') // sélectionner l'élément html en faisant attention à l'ID qui doit correspondre
+|				  .addEventListener('input', function(e) { // ajouter un écouteur d'évènement qui prend 
+|						    // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
+|							    // function(e) : la fonction de rappel
+|		    */
+|
+|		   /** Structure de la syntaxe map.querySourceFeatures             
+|				  map.querySourceFeatures //  C'est une méthode de Maptiler qui permet d'intérroger les entités
+|							    sous la forme  map.querySourceFeatures(source, [options]) : voir => https://docs.maptiler.com/sdk-js/api/map/#map#querysourcefeatures
+|				      sourceLayer: 'ID de la couche concernée' //                     
+|		   */
+|
+|		 /** Explication détaillée de la partie  if (name.includes(searchQuery) && osmId !== undefined)   
+|			// .include est une méthode JS qui  permet de vérifier si une chaîne de caractères contient une autre chaîne de caractères.
+|			      // donc ici on va vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) c'est à dire ce que l'utilisateur a tapé et qu'on a normalisé et 
+|			      // stocké plus haut sous la variable searchQuery et on va vérifier qu'on a bien un identifiant unique osm_id qui existe et a une valeur			
+|			      // Pour centrer sur une entité c'est plus facile quand c'est un point on zoom juste sur la valeur de coordonnées mais si c'est une ligne ou un polygone c'est différent
+|			      // donc on va créer une variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
+|		
+| 		/** Structure de la syntaxe  map.flyTo
+| 			map.flyTo({ // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
+| 				center: coordonées du point sur lequel zoomer, // et on centre sur la valeur du centroide
+| 				zoom: niveau de zoom });  et on définit l'échelle de zoom voir https://docs.maptiler.com/sdk-js/api/map/#map#flyto                        
+|                         // on peut aussi utiliser la méthode .jumpTo https://docs.maptiler.com/sdk-js/api/map/#map#jumpto et affiner les options pour chacune des deux méthodes
+|  
+|  		/** Structure de la syntaxe  map.setFeatureState() // voir https://docs.maptiler.com/sdk-js/api/map/#map#setfeaturestate
+| 		  map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).    
+| 	                { source: 'nom de la couche', id: osmId}, // mettre dans la partie id l'identifiant unique de chaque entité ou la clé primaire si on veut
+| 	                { hover: true } // l'éta qu'on donne à l'entité retrouvée
+| 			
+| 		PI : // on peut définir en amont le style qui est associé à cet etat hover ou selection comme ça on rappelle l'état ici et on le mets à true, ce qui va styler l'entité comme survolée ou sélectionnée
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 

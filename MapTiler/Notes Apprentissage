@@ -211,104 +211,101 @@ ________________________________________________________________________________
 
 /* 4-1- Fonctionnalité de recherche d'entités*/
 
-	1- créer dans une html une barre de recherche : type input (voir les caractéristiques et paramètres dans html)
-  		|--->	<input type="text" id="search-input" placeholder="Rechercher un parc...">
+4-1-1- créer dans une html une barre de recherche : type input (voir les caractéristiques et paramètres dans html)
+	|--->	<input type="text" id="search-input" placeholder="Rechercher un parc...">
 
-	2- définir les propriétés de la barre de recherche dans le css | les options importantes pour le style sont : 
-		|--->   top: 20px; //  placer la barre de recherche à la bonne hauteur 
-		|--->	transform: translateX(-50%); // centrer la barre
-		|--->	left: 50%; // centrer la barre
-		|--->	z-index: 1; // Assure que l'input s'affiche au-dessus de la carte 
-		|--->	width: 300px; // Largeur fixe pour la barre de recherche 
+4-1-2- définir les propriétés de la barre de recherche dans le css | les options importantes pour le style sont : 
+	|--->   top: 20px; //  placer la barre de recherche à la bonne hauteur 
+	|--->	transform: translateX(-50%); // centrer la barre
+	|--->	left: 50%; // centrer la barre
+	|--->	z-index: 1; // Assure que l'input s'affiche au-dessus de la carte 
+	|--->	width: 300px; // Largeur fixe pour la barre de recherche 
 
-	3- Normaliser les caractères : // on va s'affranchir des problèmes liés aux accents et casse en utilisant la fonction normalizeString() qui fonctionne comme ceci : 
-		
-			|--->  function normalizeString(str) { // créer la fonction qui prendra en argument str
-		  		|--->  return str // renvoie la valeur str
-		    		|--->  .normalize("NFD") // Normalise la chaîne en utilisant la forme de décomposition canonique
-		                      // La méthode .normalize("NFD") décompose les caractères accentués en leurs composants de base. 
-				     // Par exemple, "é" devient "e" + "́" (lettre et accent séparés).
-		    		|--->  .replace(/[\u0300-\u036f]/g, "") // Suppression des accents : L'expression régulière /[\u0300-\u036f]/g recherche tous les caractères 
-									// de diacritiques dans la chaîne (accents) et les remplace par une chaîne vide ("").
-		    		|--->  .toLowerCase(); // Convertit la chaîne en minuscules
-			}
+4-1-3- Normaliser les caractères : // on va s'affranchir des problèmes liés aux accents et casse en utilisant la fonction normalizeString() qui fonctionne comme ceci : 
 
-	4- Calculer le centroïde : // utile pour zoomer que le centre du polygone, sinon on peut zoomer sur un des points du polygone. Si c'était une couche ponctuelle on en aurait pas besoin.
-	
-		|--->  function centroidPolygon(coordinates) {// créer la fonction centroide qui prends la liste des coordonnées des points du polygone en argument
-			|--->  let sumX = 0, sumY = 0, numPoints = 0; // On initialise les variables : somme de toutes les coordonnées x, y et nombre de sommets
-			  // Les coordonnées[0] contient le contour extérieur du polygone
-			|--->    coordinates[0].forEach(coord => { // on premier élément du tableau coordinates et ensuite on itère sur chaque sommet
-				|--->     sumX += coord[0]; // Ajoute la coordonnée x (longitude) du point actuel à la somme sumX
-				|--->     sumY += coord[1]; //  idem pour la latitude
-				|--->      numPoints++;} // Incrémente le compteur numPoints de 1 pour chaque sommet trouvé.
-					// calcul des coordonnées X et Y du centroïde
-			|--->    const centerX = sumX / numPoints; // Calcule la coordonnée x (longitude) moyenne en divisant la somme totale de toutes les coordonnées x (sumX) par le nombre total de points (numPoints). 
-			|--->    const centerY = sumY / numPoints; // idem pour la latitude
-			|--->    return [centerX, centerY]; // renvoie un tableau contenant les coordonnées du centroïde [centerX, centerY],
-		}
+	|--->  function normalizeString(str) { // créer la fonction qui prendra en argument str
+		|--->  return str // renvoie la valeur str
+		|--->  .normalize("NFD") // Normalise la chaîne en utilisant la forme de décomposition canonique
+		      // La méthode .normalize("NFD") décompose les caractères accentués en leurs composants de base. 
+		     // Par exemple, "é" devient "e" + "́" (lettre et accent séparés).
+		|--->  .replace(/[\u0300-\u036f]/g, "") // Suppression des accents : L'expression régulière /[\u0300-\u036f]/g recherche tous les caractères 
+							// de diacritiques dans la chaîne (accents) et les remplace par une chaîne vide ("").
+		|--->  .toLowerCase(); // Convertit la chaîne en minuscules
 
-	5- La recherche en elle-même : // elle est dans un écouteur d'évènements addEventListener			
+4-1-4- Calculer le centroïde : // utile pour zoomer que le centre du polygone, sinon on peut zoomer sur un des points du polygone. Si c'était une couche ponctuelle on en aurait pas besoin.
 
-		|--->  document.getElementById('search-input').addEventListener('input', function(e) { // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
-				|--->  var searchQuery = normalizeString(e.target.value); // Utilise la fonction normalizeString
-				|--->   var features = map.querySourceFeatures('parcs', { // Récupère les entités (features) de la source nommée 'parcs' précédemment chargée et de la couche source 'parcs_id'.
-					|--->  sourceLayer: 'parcs_id' // prendre l'ID de la couche à utiliser
-				|--->   features.forEach(function(feature) {
-					|--->  var name = normalizeString(feature.properties.name); // Utilise la fonction normalizeString sur l'attribut name récupérée avec feature.properties.name
-        				|--->  var osmId = feature.properties.osm_id; // Récupèrer l'ID unique OSM
-					|--->  if (name.includes(searchQuery) && osmId !== undefined) {// vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) et si la valeur osm_id existe
-						|---> let centerCoordinates; // création de la variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
-						|---> if (feature.geometry.type === 'Polygon') { // on regarde dans les infos de la couche le type de géométrie et si c'est un polygone
-						|---> centerCoordinates = centroidPolygon(feature.geometry.coordinates); // à la variable centerCoordinates, j'affecte la valeur du centroïde en faisant appel à la fonction de calcul de centroïde défini sus créé 
-						|---> } else if (feature.geometry.type === 'Point') {
-						|---> centerCoordinates = feature.geometry.coordinates; // dans le cas où c'est un point bah je prends juste les coordonées du point comme centroïde, logique on ne va pas calculer le centröide d'un point
-						|---> if (centerCoordinates) {    // on vérifie si le centroïde existe et a une valeur valide avant de faire un centrage. Comme ça on évite des bugs qui surviendraient en cas de mauvaises valeurs pour la variable centroïdes
-							|--->map.flyTo({ center: centerCoordinates, zoom: 17 }); // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
-						|---> map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).
-							|---> { source: 'parcs', id: osmId}, // mettre dans la prartie id l'identifiant unique de chaque entité ou la clé primaire si on veut
-							|---> { hover: true } // mettre en évidence l'entité trouvée
+	|--->  function centroidPolygon(coordinates) {// créer la fonction centroide qui prends la liste des coordonnées des points du polygone en argument
+		|--->  let sumX = 0, sumY = 0, numPoints = 0; // On initialise les variables : somme de toutes les coordonnées x, y et nombre de sommets
+		  // Les coordonnées[0] contient le contour extérieur du polygone
+		|--->    coordinates[0].forEach(coord => { // on premier élément du tableau coordinates et ensuite on itère sur chaque sommet
+			|--->     sumX += coord[0]; // Ajoute la coordonnée x (longitude) du point actuel à la somme sumX
+			|--->     sumY += coord[1]; //  idem pour la latitude
+			|--->      numPoints++;} // Incrémente le compteur numPoints de 1 pour chaque sommet trouvé.
+				// calcul des coordonnées X et Y du centroïde
+		|--->    const centerX = sumX / numPoints; // Calcule la coordonnée x (longitude) moyenne en divisant la somme totale de toutes les coordonnées x (sumX) par le nombre total de points (numPoints). 
+		|--->    const centerY = sumY / numPoints; // idem pour la latitude
+		|--->    return [centerX, centerY]; // renvoie un tableau contenant les coordonnées du centroïde [centerX, centerY],
 
-	6- Réinitialiser l'état de toutes les entités lorsque la recherche est effacée // 
-		|---> document.getElementById('search-input').addEventListener('search', function(e) {écouteur d'événements 'search', déclenché quand l'utilisateur appuie sur la touche « Entrée » ou efface le champ de recherche
-			|---> resetFeatureStates(); // Réinitialiser les états de mise en évidence
+4-1-5- La recherche en elle-même : // elle est dans un écouteur d'évènements addEventListener			
+
+	|--->  document.getElementById('search-input').addEventListener('input', function(e) { // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
+		|--->  var searchQuery = normalizeString(e.target.value); // Utilise la fonction normalizeString
+		|--->   var features = map.querySourceFeatures('parcs', { // Récupère les entités (features) de la source nommée 'parcs' précédemment chargée et de la couche source 'parcs_id'.
+			|--->  sourceLayer: 'parcs_id' // prendre l'ID de la couche à utiliser
+		|--->   features.forEach(function(feature) {
+			|--->  var name = normalizeString(feature.properties.name); // Utilise la fonction normalizeString sur l'attribut name récupérée avec feature.properties.name
+			|--->  var osmId = feature.properties.osm_id; // Récupèrer l'ID unique OSM
+			|--->  if (name.includes(searchQuery) && osmId !== undefined) {// vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) et si la valeur osm_id existe
+				|---> let centerCoordinates; // création de la variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
+				|---> if (feature.geometry.type === 'Polygon') { // on regarde dans les infos de la couche le type de géométrie et si c'est un polygone
+					|---> centerCoordinates = centroidPolygon(feature.geometry.coordinates); // à la variable centerCoordinates, j'affecte la valeur du centroïde en faisant appel à la fonction de calcul de centroïde défini sus créé 
+				|---> } else if (feature.geometry.type === 'Point') {
+					|---> centerCoordinates = feature.geometry.coordinates; // dans le cas où c'est un point bah je prends juste les coordonées du point comme centroïde, logique on ne va pas calculer le centröide d'un point
+				|---> if (centerCoordinates) {    // on vérifie si le centroïde existe et a une valeur valide avant de faire un centrage. Comme ça on évite des bugs qui surviendraient en cas de mauvaises valeurs pour la variable centroïdes
+					|--->map.flyTo({ center: centerCoordinates, zoom: 17 }); // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
+				|---> map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).
+					|---> { source: 'parcs', id: osmId}, // mettre dans la prartie id l'identifiant unique de chaque entité ou la clé primaire si on veut
+					|---> { hover: true } // mettre en évidence l'entité trouvée
+
+4-1-6- Réinitialiser l'état de toutes les entités lorsque la recherche est effacée 
+	|---> document.getElementById('search-input').addEventListener('search', function(e) {écouteur d'événements 'search', déclenché quand l'utilisateur appuie sur la touche « Entrée » ou efface le champ de recherche
+		|---> resetFeatureStates(); // Réinitialiser les états de mise en évidence
 
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 |				// ** EXPLICATION DE LA SYNTAXE DE CHAQUE PARTIE DELICATE DU CODE** //
 |
-|		    /** Structure de la syntaxe  document.getElementById('search-input').addEventListener('input', function(e)         
-|			    document // DOM
-|				  .getElementById('search-input') // sélectionner l'élément html en faisant attention à l'ID qui doit correspondre
-|				  .addEventListener('input', function(e) { // ajouter un écouteur d'évènement qui prend 
-|						    // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
-|							    // function(e) : la fonction de rappel
-|		    */
+|	/** Structure de la syntaxe  document.getElementById('search-input').addEventListener('input', function(e)         
+|	    document // DOM
+|		  .getElementById('search-input') // sélectionner l'élément html en faisant attention à l'ID qui doit correspondre
+|		  .addEventListener('input', function(e) { // ajouter un écouteur d'évènement qui prend 
+|		    // l'évènement 'input' => chaque fois que quelque chose est tapé dans la barre de recherche
+|		    // function(e) : la fonction de rappel
+|	*/
 |
-|		   /** Structure de la syntaxe map.querySourceFeatures             
-|				  map.querySourceFeatures //  C'est une méthode de Maptiler qui permet d'intérroger les entités
-|							    sous la forme  map.querySourceFeatures(source, [options]) : voir => https://docs.maptiler.com/sdk-js/api/map/#map#querysourcefeatures
-|				      sourceLayer: 'ID de la couche concernée' //                     
+|	/** Structure de la syntaxe map.querySourceFeatures : voir => https://docs.maptiler.com/sdk-js/api/map/#map#querysourcefeatures         
+|	map.querySourceFeatures //  C'est une méthode de Maptiler qui permet d'intérroger les entités sous la forme  map.querySourceFeatures(source, [options]) 
+|		sourceLayer: 'ID de la couche concernée' //                     
 |		   */
 |
-|		 /** Explication détaillée de la partie  if (name.includes(searchQuery) && osmId !== undefined)   
-|			// .include est une méthode JS qui  permet de vérifier si une chaîne de caractères contient une autre chaîne de caractères.
-|			      // donc ici on va vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) c'est à dire ce que l'utilisateur a tapé et qu'on a normalisé et 
-|			      // stocké plus haut sous la variable searchQuery et on va vérifier qu'on a bien un identifiant unique osm_id qui existe et a une valeur			
-|			      // Pour centrer sur une entité c'est plus facile quand c'est un point on zoom juste sur la valeur de coordonnées mais si c'est une ligne ou un polygone c'est différent
-|			      // donc on va créer une variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
+|	/** Explication détaillée de la partie  if (name.includes(searchQuery) && osmId !== undefined)   
+|		// .include est une méthode JS qui  permet de vérifier si une chaîne de caractères contient une autre chaîne de caractères.
+|	      // donc ici on va vérifier si dans la valeur de l'attribut name qu'on a stocké sous la variable name contient (seachQuery) c'est à dire ce que l'utilisateur a tapé et qu'on a normalisé et 
+|	     // stocké plus haut sous la variable searchQuery et on va vérifier qu'on a bien un identifiant unique osm_id qui existe et a une valeur			
+|	    // Pour centrer sur une entité c'est plus facile quand c'est un point on zoom juste sur la valeur de coordonnées mais si c'est une ligne ou un polygone c'est différent
+|	   // donc on va créer une variable centerCoordinates qui va stocker la valeur du centroïde en faisant appel à la fonction écrite plus haut qui calcule le centroïde
 |		
 | 		/** Structure de la syntaxe  map.flyTo
-| 			map.flyTo({ // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
-| 				center: coordonées du point sur lequel zoomer, // et on centre sur la valeur du centroide
-| 				zoom: niveau de zoom });  et on définit l'échelle de zoom voir https://docs.maptiler.com/sdk-js/api/map/#map#flyto                        
-|                         // on peut aussi utiliser la méthode .jumpTo https://docs.maptiler.com/sdk-js/api/map/#map#jumpto et affiner les options pour chacune des deux méthodes
+| 	map.flyTo({ // c'est une méthode de maptiler qui permet de centrer sur une entité avec un effet de vol vers l'entité 
+| 		center: coordonées du point sur lequel zoomer, // et on centre sur la valeur du centroide
+| 		zoom: niveau de zoom });  et on définit l'échelle de zoom voir https://docs.maptiler.com/sdk-js/api/map/#map#flyto                        
+|              // on peut aussi utiliser la méthode .jumpTo https://docs.maptiler.com/sdk-js/api/map/#map#jumpto et affiner les options pour chacune des deux méthodes
 |  
 |  		/** Structure de la syntaxe  map.setFeatureState() // voir https://docs.maptiler.com/sdk-js/api/map/#map#setfeaturestate
-| 		  map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).    
-| 	                { source: 'nom de la couche', id: osmId}, // mettre dans la partie id l'identifiant unique de chaque entité ou la clé primaire si on veut
-| 	                { hover: true } // l'éta qu'on donne à l'entité retrouvée
+| 	map.setFeatureState( // La méthode setFeatureState() est utilisée pour définir un état de survol (hover) à true pour l'entité trouvée, ce qui peut modifier son style (par exemple, changer la couleur ou l'apparence).    
+| 	            { source: 'nom de la couche', id: osmId}, // mettre dans la partie id l'identifiant unique de chaque entité ou la clé primaire si on veut
+| 	            { hover: true } // l'éta qu'on donne à l'entité retrouvée
 | 			
-| 		PI : // on peut définir en amont le style qui est associé à cet etat hover ou selection comme ça on rappelle l'état ici et on le mets à true, ce qui va styler l'entité comme survolée ou sélectionnée
+| 	PI : // on peut définir en amont le style qui est associé à cet etat hover ou selection comme ça on rappelle l'état ici et on le mets à true, ce qui va styler l'entité comme survolée ou sélectionnée
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 

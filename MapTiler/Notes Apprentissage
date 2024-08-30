@@ -109,19 +109,19 @@ les fonctions s'ajoutent en utilisant new Maptilersdk.NomDeLaFonction
 		|---> map.on('mouseleave', 'couche_concernée' /* ID de la couche et pas le nom */, function ()  { // ajouter un évènement  
 			 |---> map.getCanvas().style.cursor = ''; // définir le style du curseur
 
-	2-2-7- ####### Structure de la syntaxe pour ajouter une popup #######
+2-2-7- ####### Structure de la syntaxe pour ajouter une popup #######
 
-		2-2-7-1 ####### Pour des points #######
-								
-		|---> Popup // créer la variable popup
-		|---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
-			 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
-			 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
-			 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
-			 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
-				 |---> .setLngLat(coordonnées) // récupérer les coordonnées
-				 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
-				 |---> .addTo(map) // ahouter la popup à la carte
+	2-2-7-1 ####### Pour des points #######
+							
+	|---> Popup // créer la variable popup
+	|---> map.on('comportement du curseur', 'couche_concernée' /* ID de la couche et pas le nom */, function (e)  { // clic, survol, éloignement, etc.
+		 |---> Coordonnées = e.features[0].geometry.coordinates.slice() // récupérer les valeurs des coordonnées de chaque élément de la couche
+		 |---> InfoVoulue = e.features[0].properties.InfoVoulue // récupérer l'info voulue
+		 |---> Boucle d'affichage multiple // s'assurer qu'en cas de zoom elévé les entités multiples s'affichent
+		 |---> Popup //ajouter une popup à la carte avec les caractéristiques attendues
+			 |---> .setLngLat(coordonnées) // récupérer les coordonnées
+			 |---> .setHTML(informations à afficher) // infos à afficher avec des balises HTML : exemple '<h3>'+ "Nom : " + nom + '</h3>' 
+			 |---> .addTo(map) // ahouter la popup à la carte
 
 
 2-2-7-2 ####### Pour des polygones #######
@@ -202,10 +202,7 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 								
 		|---> contenu +=  //  contenu += est utilisé pour ajouter une balise <img> à la chaîne de caractères déjà existante dans contenu :
 		|---> '<img src="'+photoUrl+' " alt="' + name + '" class="popup-photo">'; // il faut faire attention aux guillemets et espaces avant 
-					chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée
-	
-	
-
+					chaque nouveau paramètre pour que la syntaxe html de la balise soit respectée	
 
 //* 4- Interactions *//
 
@@ -221,6 +218,16 @@ Tout se déroule dans le bloc de code de l'évènement map.on() qui affiche les 
 		|--->	z-index: 1; // Assure que l'input s'affiche au-dessus de la carte 
 		|--->	width: 300px; // Largeur fixe pour la barre de recherche 
 
+	3- Normaliser les caractères : // on va s'affranchir des problèmes liés aux accents et casse en utilisant la fonction normalizeString() qui fonctionne comme ceci : 
+		|--->  function normalizeString(str) { // créer la fonction qui prendra en argument str
+		  		|--->  return str // renvoie la valeur str
+		    		|--->  .normalize("NFD") // Normalise la chaîne en utilisant la forme de décomposition canonique
+		                      // La méthode .normalize("NFD") décompose les caractères accentués en leurs composants de base. 
+				     // Par exemple, "é" devient "e" + "́" (lettre et accent séparés).
+		    		|--->  .replace(/[\u0300-\u036f]/g, "") // Suppression des accents : L'expression régulière /[\u0300-\u036f]/g recherche tous les caractères 
+									// de diacritiques dans la chaîne (accents) et les remplace par une chaîne vide ("").
+		    		|--->  .toLowerCase(); // Convertit la chaîne en minuscules
+			}
 
 
 

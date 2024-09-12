@@ -24,3 +24,17 @@ body {
   text-align: center; /* Centre le texte horizontalement */
   margin: 0; /* Retire les marges par défaut */
 }
+
+#search-input {
+  position: absolute;
+  top: 20px; /* Ajustez cette valeur pour placer la barre de recherche à la bonne hauteur */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px;
+  font-size: 16px;
+  z-index: 1; /* Assure que l'input s'affiche au-dessus de la carte */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 300px; /* Largeur fixe pour la barre de recherche */
+}
